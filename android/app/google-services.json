@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "796642945357",
+    "firebase_url": "https://maumetro-62e76.firebaseio.com",
+    "project_id": "maumetro-62e76",
+    "storage_bucket": "maumetro-62e76.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:796642945357:android:f007deb3297ab1fdfc6f04",
+        "android_client_info": {
+          "package_name": "maumetro.maumetro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "796642945357-s0iv9pjfoo69j9l3g86boamcn39o3sr9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "maumetro.maumetro",
+            "certificate_hash": "8b4c1598b715f0722f8bd1a7117b89a030066234"
+          }
+        },
+        {
+          "client_id": "796642945357-ajusm5osvl99erbpf8mquu00oof2pel6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIFdkdABvjmmrOrNgFss_gXAIEaXDgjl4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "796642945357-ajusm5osvl99erbpf8mquu00oof2pel6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
