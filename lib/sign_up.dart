@@ -1,3 +1,4 @@
+//signup page
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:maumetro/signIn_page.dart';
@@ -8,13 +9,15 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  String _email, _password;
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String _email, _password;
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: Text('Login to Maumetro'),
+        title: Text('Sign up to MauMetro'),
       ),
       body: Form(
         key: _formKey,

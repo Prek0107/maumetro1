@@ -1,30 +1,21 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'sidebar.dart';
 
-class Home extends StatefulWidget {
-  @override
-  _HomeState createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
+class BuyTickets extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: (){
+      onWillPop: () {
         return new Future(() => false);
       },
       child: Scaffold(
         appBar: new AppBar(
-            title: new Text("Home"),
+            title: new Text("Buy tickets"),
             centerTitle: true
         ),
+        //calling the sidebar
         drawer: new Sidebar(),
       ),
     );
-  }
-
-  void signOut() async {
-    return FirebaseAuth.instance.signOut();
   }
 }

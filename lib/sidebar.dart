@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:maumetro/maproute.dart';
 import 'buyticket.dart';
@@ -8,6 +9,7 @@ import 'mecards.dart';
 import 'emergencycontacts.dart';
 import 'makecomplaint.dart';
 import 'help.dart';
+import 'root.dart';
 
 class Sidebar extends StatelessWidget {
   @override
@@ -68,7 +70,7 @@ class Sidebar extends StatelessWidget {
               new ListTile(
                 title: new Text("Feeder bus"),
                 leading: new Icon(Icons.directions_bus,
-                    color: Colors.blueAccent,
+                    color: Colors.redAccent,
                     size: 35.0
                 ),
                 trailing: Icon (Icons.keyboard_arrow_right),
@@ -80,7 +82,7 @@ class Sidebar extends StatelessWidget {
               new ListTile(
                 title: new Text("MECard"),
                 leading: new Icon(Icons.credit_card,
-                    color: Colors.purpleAccent,
+                    color: Colors.blue,
                     size: 35.0
                 ),
                 trailing: Icon (Icons.keyboard_arrow_right),
@@ -92,7 +94,7 @@ class Sidebar extends StatelessWidget {
               new ListTile(
                 title: new Text("Emergency Contacts"),
                 leading: new Icon(Icons.contact_phone,
-                    color: Colors.redAccent,
+                    color: Colors.orange,
                     size: 35.0
                 ),
                 trailing: Icon (Icons.keyboard_arrow_right),
@@ -104,7 +106,7 @@ class Sidebar extends StatelessWidget {
               new ListTile(
                 title: new Text("Make complaint"),
                 leading: new Icon(Icons.create,
-                    color: Colors.orange,
+                    color: Colors.teal,
                     size: 35.0
                 ),
                 trailing: Icon (Icons.keyboard_arrow_right),
@@ -116,13 +118,28 @@ class Sidebar extends StatelessWidget {
               new ListTile(
                 title: new Text("Help"),
                 leading: new Icon(Icons.help,
-                    color: Colors.teal,
+                    color: Colors.blueGrey,
                     size: 35.0
                 ),
                 trailing: Icon (Icons.keyboard_arrow_right),
                 onTap: (){
                   Navigator.of(context).pop();
                   Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => Help()));
+                },
+              ),
+              new ListTile(
+                title: new Text("Logout"),
+                leading: new Icon(Icons.exit_to_app,
+                    color: Colors.blueGrey,
+                    size: 35.0
+                ),
+                trailing: Icon (Icons.keyboard_arrow_right),
+                onTap: (){
+                  FirebaseAuth.instance.signOut().then((value){
+                    Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => WelcomePage()));
+                  }).catchError((e) {
+                    print(e);
+                  });
                 },
               ),
             ]

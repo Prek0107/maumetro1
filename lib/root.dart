@@ -1,3 +1,4 @@
+//login and sign up options
 import 'package:flutter/material.dart';
 import 'package:maumetro/signIn_page.dart';
 import 'package:maumetro/sign_up.dart';
@@ -10,24 +11,31 @@ class WelcomePage extends StatefulWidget {
 class _WelcomePageState extends State<WelcomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Welcome page of MauMetro'),
+    return WillPopScope(
+      onWillPop: () {
+        return new Future(() => false);
+      },
+      child: Scaffold(
+        appBar: new AppBar(
+          title: new Text("MauMetro"),
+          centerTitle: true,
+          leading: Icon(Icons.directions_subway),
+        ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            RaisedButton(
+              onPressed: navigateToSignIn,
+              child: Text('Login'),
+          ),
+            RaisedButton(
+              onPressed: navigateToSignUp,
+              child: Text('Sign up'),
+            ),
+          ]
+        )
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          RaisedButton(
-            onPressed: navigateToSignIn,
-            child: Text('Login'),
-          ),
-          RaisedButton(
-            onPressed: navigateToSignUp,
-            child: Text('Sign up'),
-          ),
-        ]
-      )
     );
   }
 
