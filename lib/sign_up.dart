@@ -1,4 +1,5 @@
 //signup page
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:maumetro/signIn_page.dart';
@@ -11,7 +12,22 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String _email, _password;
+  final db = Firestore.instance;
+  String _email, _password, _fullname, _id;
+
+  void saveToDatabase() async {
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+
+      DocumentReference ref = await db.collection('users')
+          .add({
+        'fullname': '$_fullname',
+        'email': '$_email'
+      });
+      setState(() => _id= ref.documentID);
+      print(ref.documentID);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +39,17 @@ class _SignUpPageState extends State<SignUpPage> {
         key: _formKey,
         child: Column(
           children: <Widget>[
+            TextFormField(
+              validator: (input) {
+                if(input.isEmpty){
+                  return 'Please enter your full name';
+                }
+              },
+              onSaved: (input) => _fullname = input,
+              decoration: InputDecoration(
+                  labelText: 'Fullname'
+              ),
+            ),
             TextFormField(
               validator: (input) {
                 if(input.isEmpty){
@@ -61,6 +88,7 @@ class _SignUpPageState extends State<SignUpPage> {
       _formKey.currentState.save();
       try{
        await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _email, password: _password);
+       saveToDatabase();
        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
       }catch(e){
         print(e.message);
