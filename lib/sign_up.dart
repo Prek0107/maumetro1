@@ -89,7 +89,9 @@ class _SignUpPageState extends State<SignUpPage> {
       DocumentReference ref = await db.collection('users')
           .add({
         'fullname': '$_fullname',
-        'email': '$_email'
+        'email': '$_email',
+        //"UID": FirebaseAuth.instance.app.name,
+
       });
       setState(() => _id= ref.documentID);
       print(ref.documentID);
