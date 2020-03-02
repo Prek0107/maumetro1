@@ -15,20 +15,6 @@ class _SignUpPageState extends State<SignUpPage> {
   final db = Firestore.instance;
   String _email, _password, _fullname, _id;
 
-  void saveToDatabase() async {
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
-
-      DocumentReference ref = await db.collection('users')
-          .add({
-        'fullname': '$_fullname',
-        'email': '$_email'
-      });
-      setState(() => _id= ref.documentID);
-      print(ref.documentID);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -93,6 +79,20 @@ class _SignUpPageState extends State<SignUpPage> {
       }catch(e){
         print(e.message);
       }
+    }
+  }
+
+  void saveToDatabase() async {
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+
+      DocumentReference ref = await db.collection('users')
+          .add({
+        'fullname': '$_fullname',
+        'email': '$_email'
+      });
+      setState(() => _id= ref.documentID);
+      print(ref.documentID);
     }
   }
 }
