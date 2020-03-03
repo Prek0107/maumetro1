@@ -24,15 +24,15 @@ class _MapRouteState extends State<MapRoute> {
             width: 45.0,
             height: 45.0,
             point: new LatLng(
-              snapshot.data.documents[i]['coords'].latitude,
-                snapshot.data.documents[i]['coords'].longitude),
+              snapshot.data.documents[i]['coordinates'].latitude,
+                snapshot.data.documents[i]['coordinates'].longitude),
             builder: (context) => new Container(
               child: IconButton(
                 icon: Icon(Icons.location_on),
                 color: Colors.red,
                 iconSize: 45.0,
                   onPressed: () {
-                  print(snapshot.data.documents[i]['place']);
+                  print(snapshot.data.documents[i]['station']);
                   },
               ),
             )
@@ -41,7 +41,7 @@ class _MapRouteState extends State<MapRoute> {
 
         return new FlutterMap(
             options: new MapOptions(
-                center: new LatLng(-20.20, 57.47), minZoom: 5.0),
+                center: new LatLng(-20.21, 57.48), minZoom: 10.0),
             layers: [
               new TileLayerOptions(
                   urlTemplate:
