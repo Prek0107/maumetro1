@@ -23,15 +23,35 @@ class _WelcomePageState extends State<WelcomePage> {
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          //crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             RaisedButton(
               onPressed: navigateToSignIn,
-              child: Text('Login'),
+              child: Text('Login',
+                  style: TextStyle(
+                      fontSize: 20.0)),
+              padding: EdgeInsets.symmetric(vertical: 11.0, horizontal: 59.0), //size of button
+              color: Colors.blue,
+              elevation: 50.0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(20),
+                ),
+              ),
           ),
             RaisedButton(
               onPressed: navigateToSignUp,
-              child: Text('Sign up'),
+              child: Text('Sign up',
+                  style: TextStyle(
+                      fontSize: 20.0)),
+              elevation: 50.0,
+              padding: EdgeInsets.symmetric(vertical: 11.0, horizontal: 50.0), //size of button
+              color: Colors.green,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(20),
+                ),
+              ),
             ),
           ]
         )
