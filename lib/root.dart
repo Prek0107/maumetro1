@@ -25,12 +25,14 @@ class _WelcomePageState extends State<WelcomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           //crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            Align(alignment: Alignment.center
+            ),
             RaisedButton(
               onPressed: navigateToSignIn,
               child: Text('Login',
                   style: TextStyle(
                       fontSize: 20.0)),
-              padding: EdgeInsets.symmetric(vertical: 11.0, horizontal: 59.0), //size of button
+              padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 69.0), //size of button
               color: Colors.blue,
               elevation: 50.0,
               shape: RoundedRectangleBorder(
@@ -39,13 +41,14 @@ class _WelcomePageState extends State<WelcomePage> {
                 ),
               ),
           ),
+            SizedBox(height: 25),
             RaisedButton(
               onPressed: navigateToSignUp,
               child: Text('Sign up',
                   style: TextStyle(
                       fontSize: 20.0)),
               elevation: 50.0,
-              padding: EdgeInsets.symmetric(vertical: 11.0, horizontal: 50.0), //size of button
+              padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 60.0), //size of button
               color: Colors.green,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
