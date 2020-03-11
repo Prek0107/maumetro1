@@ -12,7 +12,7 @@ class MapRoute extends StatefulWidget {
 
 class _MapRouteState extends State<MapRoute> {
   List<Marker> allMarkers = [];
-  String inputaddr='';
+  //String inputaddr='';
 
   Widget loadMap() {
     return StreamBuilder(
@@ -28,9 +28,9 @@ class _MapRouteState extends State<MapRoute> {
                 snapshot.data.documents[i]['coordinates'].longitude),
             builder: (context) => new Container(
               child: IconButton(
-                icon: Icon(Icons.location_on),
-                color: Colors.red,
-                iconSize: 45.0,
+                icon: Icon(Icons.directions_subway),
+                color: Colors.black38,
+                iconSize: 40.0,
                   onPressed: () {
                   print(snapshot.data.documents[i]['station']);
                   },
