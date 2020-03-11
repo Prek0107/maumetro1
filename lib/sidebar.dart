@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:maumetro/maproute.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'buyticket.dart';
 import 'guidelines.dart';
 import 'stations.dart';
@@ -135,11 +136,29 @@ class Sidebar extends StatelessWidget {
                 ),
                 trailing: Icon (Icons.keyboard_arrow_right),
                 onTap: (){
-                  FirebaseAuth.instance.signOut().then((value){
-                    Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => WelcomePage()));
-                  }).catchError((e) {
-                    print(e);
-                  });
+                  return Alert(
+                      context: context,
+                      title: "Sign out?",
+                      desc: "Are you sure you want to log out?",
+                      buttons: [
+                        DialogButton(
+                          child: Text ("Yes"),
+                          onPressed: () {
+                            FirebaseAuth.instance.signOut().then((value){
+                              Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => WelcomePage()));
+                            }).catchError((e) {
+                              print(e);
+                            });
+                          },
+                        ),
+                        DialogButton(
+                          child: Text ("No"),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ])
+                      .show();
                 },
               ),
             ]
