@@ -32,7 +32,23 @@ class _MapRouteState extends State<MapRoute> {
                 color: Colors.black38,
                 iconSize: 40.0,
                   onPressed: () {
-                  print(snapshot.data.documents[i]['station']);
+                    Scaffold.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                            "${snapshot.data.documents[i]['station']}" + " Station",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 22
+                            ),
+                          textAlign: TextAlign.center,
+                        ),
+                        duration: Duration(milliseconds: 500),
+                        behavior: SnackBarBehavior.floating,
+                        backgroundColor: Colors.blueGrey,
+
+                      ),
+                    );
+                  //print(snapshot.data.documents[i]['station']);
                   },
               ),
             )
