@@ -14,6 +14,7 @@ class LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false, //to prevent bottom overflow
       appBar: AppBar(
         title: Text('Login to Maumetro'),
       ),
@@ -21,6 +22,7 @@ class LoginPageState extends State<LoginPage> {
         key: _formKey,
         child: Column(
           children: <Widget>[
+            SizedBox(height: 30),
             TextFormField(
               validator: (input) {
                 if(input.isEmpty){
@@ -29,9 +31,13 @@ class LoginPageState extends State<LoginPage> {
               },
               onSaved: (input) => _email = input,
               decoration: InputDecoration(
-                labelText: 'Email'
+                contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                hintText: "Email",
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(32.0)),
               ),
             ),
+            SizedBox(height: 30),
             TextFormField(
               validator: (input) {
                 if(input.length < 10){
@@ -40,13 +46,26 @@ class LoginPageState extends State<LoginPage> {
               },
               onSaved: (input) => _password = input,
               decoration: InputDecoration(
-                  labelText: 'Password'
+                contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                hintText: "Password",
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(32.0)),
               ),
               obscureText: true, //hide password when typed
             ),
+            SizedBox(height: 30),
             RaisedButton(
               onPressed: signIn,
-              child: Text('Login'),
+              child: Text('Login', style: TextStyle(
+                  fontSize: 20.0)),
+              padding: EdgeInsets.symmetric(vertical: 11.0, horizontal: 59.0), //size of button
+              color: Colors.blue,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(20),
+                ),
+              ),
+              elevation: 24.0, //shadow of button
             ),
           ],
         ),
