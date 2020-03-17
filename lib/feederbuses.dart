@@ -19,8 +19,8 @@ class _FeederBusState extends State<FeederBus> {
             title: new Text("Feeder bus"),
             centerTitle: true
         ),
-        drawer: new Sidebar(),
-        body: BusList(),//calling the sidebar
+        drawer: new Sidebar(), //calling the sidebar
+        body: BusList(),
       ),
     );
   }
@@ -33,6 +33,7 @@ class BusList extends StatefulWidget {
 }
 
 class _BusListState extends State<BusList> {
+
   Future getBus() async {
     //instantiate cloud firestore
     var firestore = Firestore.instance;
@@ -48,28 +49,40 @@ class _BusListState extends State<BusList> {
   Widget build(BuildContext context) {
     return Container(
       child: FutureBuilder(
-        future: getBus(),
-        builder: (_, snapshot) {
+          future: getBus(),
+          builder: (_, snapshot) {
 
-        if(snapshot.connectionState == ConnectionState.waiting) {
-          return Center(
-            child: Text("Loading..."),
-          );
-        } else {
+            if(snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: _circularProgressIndicator(),
+              );
+            } else {
 
-          return ListView.builder(
-              itemCount: snapshot.data.length,
-              itemBuilder: (_, index) {
+              return ListView.separated(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount: snapshot.data.length,
+                  separatorBuilder: (_, index) => Divider(),
+                  itemBuilder: (_, index) {
 
-                return ListTile(
-                  title: Text("${snapshot.data[index].data["route_no"]}"),
-                  onTap: () => navigateToBusDetail(snapshot.data[index]),
-                );
-          });
-        }
-      }),
+                    return ListTile(
+                      leading: new Icon(Icons.directions_bus, size: 38.0),
+                      trailing: Icon(Icons.keyboard_arrow_right),
+                      title: Text("${snapshot.data[index].data["route_no"]}",
+                      style: new TextStyle(fontWeight: FontWeight.bold)),
+                      subtitle: Text("${snapshot.data[index].data["station"]}"),
+                      onTap: () => navigateToBusDetail(snapshot.data[index]),
+                      contentPadding: const EdgeInsets.all(5.0),
+                    );
+                  });
+            }
+          }),
     );
   }
+}
+
+Widget _circularProgressIndicator() {
+  return CircularProgressIndicator(); //loading
 }
 
 //Displays the details of the feeder bus
@@ -77,6 +90,7 @@ class BusDetails extends StatefulWidget {
 
   final DocumentSnapshot bus;
   BusDetails({this.bus});
+
 
   @override
   _BusDetailsState createState() => _BusDetailsState();
@@ -87,18 +101,21 @@ class _BusDetailsState extends State<BusDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
+      appBar: AppBar(
           title: Text (widget.bus.data["route_no"]),
-            centerTitle: true
-        ),
-        body: Container(
-          child: Card(
-            child: ListTile(
-              title: Text (widget.bus.data["route_no"]),
-              subtitle: Text(widget.bus.data["station"]),
-            ),
+          centerTitle: true
+      ),
+      body: Container(
+        child: Card(
+          child: ListTile(
+            title: Text (
+                "Route number: " + "\n" + "${widget.bus.data["route_no"]}" + "\n\n" +
+                    "Station: " + "\n" + "${widget.bus.data["station"]}" + "\n"),
+            subtitle: Text("Bus route: " + "\n" + "${widget.bus.data["bus_route"]}"),
+            contentPadding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
           ),
         ),
+      ),
     );
   }
 }

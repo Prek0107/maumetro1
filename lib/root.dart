@@ -16,6 +16,7 @@ class _WelcomePageState extends State<WelcomePage> {
         return new Future(() => false);
       },
       child: Scaffold(
+          resizeToAvoidBottomPadding: false, //to prevent bottom overflow
         appBar: new AppBar(
           title: new Text("MauMetro"),
           centerTitle: true,

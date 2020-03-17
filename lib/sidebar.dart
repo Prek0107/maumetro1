@@ -12,17 +12,39 @@ import 'makecomplaint.dart';
 import 'help.dart';
 import 'root.dart';
 
-class Sidebar extends StatelessWidget {
+class Sidebar extends StatefulWidget {
+  @override
+  _SidebarState createState() => _SidebarState();
+}
+
+class _SidebarState extends State<Sidebar> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  FirebaseUser user;
+
+  @override
+  void initState() {
+    super.initState();
+    initUser();
+  }
+
+  initUser() async {
+    user = await _auth.currentUser();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Drawer(
         child: new ListView(
             children: <Widget>[
+              new UserAccountsDrawerHeader(
+                  //accountName: Text("${user?.displayName}"),
+                  accountEmail: Text("${user?.email}")),
               new ListTile(
                 title: new Text("Buy ticket"),
                 leading: new Icon(
                     Icons.shopping_cart,
-                    color: Colors.redAccent,
+                    color: Colors.blueGrey,
                     size: 35.0
                 ),
                 trailing: Icon (Icons.keyboard_arrow_right),
@@ -35,7 +57,7 @@ class Sidebar extends StatelessWidget {
                 title: new Text("Route"),
                 leading: new Icon(
                     Icons.map,
-                    color: Colors.blue,
+                    color: Colors.blueGrey,
                     size: 35.0
                 ),
                 trailing: Icon (Icons.keyboard_arrow_right),
@@ -47,7 +69,7 @@ class Sidebar extends StatelessWidget {
               new ListTile(
                 title: new Text("Guidelines for using Metro"),
                 leading: new Icon(Icons.receipt,
-                    color: Colors.orange,
+                    color: Colors.blueGrey,
                     size: 35.0
                 ),
                 trailing: Icon (Icons.keyboard_arrow_right),
@@ -59,7 +81,7 @@ class Sidebar extends StatelessWidget {
               new ListTile(
                 title: new Text("Station"),
                 leading: new Icon(Icons.directions_subway,
-                    color: Colors.teal,
+                    color: Colors.blueGrey,
                     size: 35.0
                 ),
                 trailing: Icon (Icons.keyboard_arrow_right),
@@ -71,7 +93,7 @@ class Sidebar extends StatelessWidget {
               new ListTile(
                 title: new Text("Feeder bus"),
                 leading: new Icon(Icons.directions_bus,
-                    color: Colors.redAccent,
+                    color: Colors.blueGrey,
                     size: 35.0
                 ),
                 trailing: Icon (Icons.keyboard_arrow_right),
@@ -83,7 +105,7 @@ class Sidebar extends StatelessWidget {
               new ListTile(
                 title: new Text("MECard"),
                 leading: new Icon(Icons.credit_card,
-                    color: Colors.blue,
+                    color: Colors.blueGrey,
                     size: 35.0
                 ),
                 trailing: Icon (Icons.keyboard_arrow_right),
@@ -95,7 +117,7 @@ class Sidebar extends StatelessWidget {
               new ListTile(
                 title: new Text("Emergency Contacts"),
                 leading: new Icon(Icons.contact_phone,
-                    color: Colors.orange,
+                    color: Colors.blueGrey,
                     size: 35.0
                 ),
                 trailing: Icon (Icons.keyboard_arrow_right),
@@ -107,7 +129,7 @@ class Sidebar extends StatelessWidget {
               new ListTile(
                 title: new Text("Make complaint"),
                 leading: new Icon(Icons.create,
-                    color: Colors.teal,
+                    color: Colors.blueGrey,
                     size: 35.0
                 ),
                 trailing: Icon (Icons.keyboard_arrow_right),
@@ -138,7 +160,7 @@ class Sidebar extends StatelessWidget {
                 onTap: (){
                   return Alert(
                       context: context,
-                      title: "Sign out?",
+                      title: "Log out?",
                       desc: "Are you sure you want to log out?",
                       buttons: [
                         DialogButton(
@@ -166,3 +188,4 @@ class Sidebar extends StatelessWidget {
     );
   }
 }
+

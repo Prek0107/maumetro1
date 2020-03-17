@@ -24,7 +24,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-  void signOut() async {
-    return FirebaseAuth.instance.signOut();
-  }
+//  void signOut() async {
+//    return FirebaseAuth.instance.signOut();
+//  }
 }

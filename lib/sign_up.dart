@@ -15,9 +15,14 @@ class _SignUpPageState extends State<SignUpPage> {
   final db = Firestore.instance;
   String _email, _password, _fullname, _id;
 
+  //final userId = FirebaseAuth.instance.currentUser();
+
+
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      resizeToAvoidBottomPadding: false, //to prevent bottom overflow
       appBar: new AppBar(
         title: Text('Sign up to MauMetro'),
       ),
@@ -25,6 +30,7 @@ class _SignUpPageState extends State<SignUpPage> {
         key: _formKey,
         child: Column(
           children: <Widget>[
+            SizedBox(height: 30),//space between the textfields
             TextFormField(
               validator: (input) {
                 if(input.isEmpty){
@@ -33,9 +39,13 @@ class _SignUpPageState extends State<SignUpPage> {
               },
               onSaved: (input) => _fullname = input,
               decoration: InputDecoration(
-                  labelText: 'Fullname'
+                contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                hintText: "Fullname",
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(32.0)),
               ),
             ),
+            SizedBox(height: 30), //space between the textfields
             TextFormField(
               validator: (input) {
                 if(input.isEmpty){
@@ -44,9 +54,13 @@ class _SignUpPageState extends State<SignUpPage> {
               },
               onSaved: (input) => _email = input,
               decoration: InputDecoration(
-                  labelText: 'Email'
+                  contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                  hintText: "Email",
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(32.0)),
               ),
             ),
+            SizedBox(height: 30), //space between the textfields
             TextFormField(
               validator: (input) {
                 if(input.length < 10){
@@ -55,13 +69,27 @@ class _SignUpPageState extends State<SignUpPage> {
               },
               onSaved: (input) => _password = input,
               decoration: InputDecoration(
-                  labelText: 'Password'
+                contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                hintText: "Password",
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(32.0)),
               ),
               obscureText: true, //hide password when typed
             ),
+            SizedBox(height: 30), //space between the textfields
             RaisedButton(
               onPressed: signUp,
-              child: Text('Sign up'),
+              child: Text('Sign up',
+                  style: TextStyle(
+                      fontSize: 20.0)),
+              padding: EdgeInsets.symmetric(vertical: 11.0, horizontal: 59.0), //size of button
+              color: Colors.blue,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(20),
+                ),
+              ),
+              elevation: 24.0, //shadow of button
             ),
           ],
         ),
@@ -83,6 +111,10 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   void saveToDatabase() async {
+    //retrieving the uid from authentication in firebase to save it to the user collection
+    final FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    final String uid = user.uid;
+
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
 
@@ -90,8 +122,7 @@ class _SignUpPageState extends State<SignUpPage> {
           .add({
         'fullname': '$_fullname',
         'email': '$_email',
-        //"UID": FirebaseAuth.instance.app.name,
-
+        'UID': '$uid'
       });
       setState(() => _id= ref.documentID);
       print(ref.documentID);

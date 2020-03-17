@@ -18,7 +18,11 @@ class _MapRouteState extends State<MapRoute> {
     return StreamBuilder(
       stream: Firestore.instance.collection('markers').snapshots(),
       builder: (context, snapshot) {
-        if(!snapshot.hasData) return Text('Loading maps...');
+        if(!snapshot.hasData)
+          return Center(
+            child: _circularProgressIndicator()
+          );
+
         for(int i=0; i<snapshot.data.documents.length; i++) {
           allMarkers.add(new Marker(
             width: 45.0,
@@ -68,6 +72,10 @@ class _MapRouteState extends State<MapRoute> {
         );
       },
     );
+  }
+
+  Widget _circularProgressIndicator() {
+    return CircularProgressIndicator(); //loading
   }
 
   @override
