@@ -67,10 +67,6 @@ class _CardListState extends State<CardList> {
                   itemBuilder: (_, index) {
 
                     return ListTile(
-//                      leading: CircleAvatar(
-//                        backgroundImage: NetworkImage(snapshot.data[index].data["image"]),
-//                      ),
-
                       leading: CircleAvatar(
                         radius: 30.0,
                         backgroundColor: Colors.transparent,
@@ -117,24 +113,98 @@ class _CardDetailsState extends State<CardDetails> {
           centerTitle: true
       ),
       body: Container(
-        child: Card(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-            child: ListTile(
-              title: Text (
-                "MECard type: " + "\n" + "${widget.card.data["type"]}" + "\n\n" +
-                "Description: " + "\n" + "${widget.card.data["description"]}" + "\n\n" +
-                "Availability: " + "\n" + "${widget.card.data["availability"]}" + "\n\n" +
-                "Price: " + "\n" + "${widget.card.data["price"]}" + "\n\n" +
-                "Travel document needed: " + "\n" + "${widget.card.data["travel_documents"]}" + "\n\n"
-             ),
-            //subtitle: Text("Description: " + "${widget.card.data["description"]}"),
-              // image: NetworkImage("${user.photoUrl}"),
-            ),
-          ),
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 50),
+        child: Column(
+            children: <Widget>[
+              Image.network(
+                "${widget.card.data["image"]}",
+                //width: 250,
+                //height: 150,
+                alignment: Alignment.topCenter,
+              ),
+              SizedBox(height: 20,),
+              Text("MECard type",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontFamily: 'Open Sans',
+                  fontWeight: FontWeight.bold
+                ),
+              ),
+              Text("${widget.card.data["type"]}",
+                style: TextStyle(
+                  fontSize: 15,
+                  letterSpacing: 0.5
+                ),
+              ),
+              SizedBox(height: 20,),
+              Text("Description",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontFamily: 'Open Sans',
+                  fontWeight: FontWeight.bold
+                ),
+              ),
+              Text("${widget.card.data["description"]}",
+                style: TextStyle(
+                    fontSize: 15,
+                    letterSpacing: 0.5,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 20,),
+              Text("Availability",
+                style: TextStyle(
+                    fontSize: 20,
+                    fontFamily: 'Open Sans',
+                    fontWeight: FontWeight.bold
+                ),
+              ),
+              Text("${widget.card.data["availability"]}",
+                style: TextStyle(
+                    fontSize: 15,
+                    letterSpacing: 0.5
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 20,),
+              Text("Price",
+                style: TextStyle(
+                    fontSize: 20,
+                    fontFamily: 'Open Sans',
+                    fontWeight: FontWeight.bold
+                ),
+              ),
+              Text("${widget.card.data["price"]}",
+                style: TextStyle(
+                    fontSize: 15,
+                    letterSpacing: 0.5
+                ),
+              ),
+              SizedBox(height: 20,),
+              Text("Travel document needed",
+                style: TextStyle(
+                    fontSize: 20,
+                    fontFamily: 'Open Sans',
+                    fontWeight: FontWeight.bold
+                ),
+              ),
+              Text("${widget.card.data["travel_documents"]}",
+                style: TextStyle(
+                    fontSize: 15,
+                    letterSpacing: 0.5
+                ),
+              ),
+//              Text (
+//              "MECard type: " + "${widget.card.data["type"]}" + "\n\n" +
+//              "Description: " + "${widget.card.data["description"]}" + "\n\n" +
+//              "Availability: " + "${widget.card.data["availability"]}" + "\n\n" +
+//              "Price: " + "${widget.card.data["price"]}" + "\n\n" +
+//              "Travel document needed: " + "${widget.card.data["travel_documents"]}" + "\n\n"
+//            )
+            ],
         ),
       ),
-    );
+      );
   }
 }
 
