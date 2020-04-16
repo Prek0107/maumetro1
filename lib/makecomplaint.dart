@@ -52,18 +52,29 @@ void saveToDatabase() async {
         //calling the sidebar
         drawer: new Sidebar(),
         body: Column(
-            children: <Widget>[
+          children: <Widget>[
+              SizedBox(height: 10,),
               TextFormField(
+                cursorWidth: 2,
                 controller: complaintcontroller,
-                validator: (input) {
-                  if (input.isEmpty) {
-                    return 'Please enter your complaint';
-                  }
-                },
                 decoration: InputDecoration(
-                    labelText: 'Write complaint'
+                    labelText: 'Your complaint',
+                    hintText: "Type your complaint here",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                ),
+                maxLength: 500,
+                maxLines: 6,
+                autofocus: true,
+                toolbarOptions: ToolbarOptions(
+                  cut: true,
+                  copy: true,
+                  selectAll: true,
+                  paste: true,
                 ),
               ),
+
               RaisedButton(
                 child: Text('Send complaint'),
                 onPressed: () {
@@ -135,22 +146,27 @@ void saveToDatabase() async {
                         ])
                         .show();
                   }
-
-
+                  return null;
                 },
               ),
+              SizedBox(height: 20,),
 
               Expanded(
                 child: StreamBuilder<QuerySnapshot>(
                   stream: Firestore.instance.collection("complaints").orderBy("date", descending: true).snapshots(),
-                  //stream: Firestore.instance.collection("complaints").orderBy("date", descending: true).where("users", isEqualTo: ).snapshots(),
+                  //stream: Firestore.instance.collection("complaints").orderBy("date", descending: true).where("users", isEqualTo: this.firebaseUser.uid).snapshots(),
 
                   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> querySnapshot) {
                     if(querySnapshot.hasError)
                       return Text("Some error");
 
                     if(querySnapshot.connectionState == ConnectionState.waiting){
-                      return CircularProgressIndicator();
+                      //return CircularProgressIndicator();
+                      return SizedBox(
+                        child: CircularProgressIndicator(),
+                        height: 20.0,
+                        width: 20.0,
+                      );
                     }else{
 
                       final complaintList = querySnapshot.data.documents;
@@ -176,7 +192,6 @@ void saveToDatabase() async {
                 },
                 )
               )
-
             ],
           ),
         ),

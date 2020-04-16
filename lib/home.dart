@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'sidebar.dart';
 
@@ -16,7 +15,7 @@ class _HomeState extends State<Home> {
       },
       child: Scaffold(
         appBar: new AppBar(
-            title: new Text("Home"),
+            title: new Text("Dashboard"),
             centerTitle: true
         ),
         drawer: new Sidebar(),

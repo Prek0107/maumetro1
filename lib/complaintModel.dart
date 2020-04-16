@@ -1,9 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class ComplaintModel{
   final String complaint;
   final String uid;
-  final Timestamp date;
+  final DateTime date;
 
   ComplaintModel({
     this.complaint,

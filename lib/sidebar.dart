@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:maumetro/home.dart';
 import 'package:maumetro/maproute.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'buyticket.dart';
@@ -11,6 +12,7 @@ import 'emergencycontacts.dart';
 import 'makecomplaint.dart';
 import 'help.dart';
 import 'root.dart';
+import 'home.dart';
 
 class Sidebar extends StatefulWidget {
   @override
@@ -40,6 +42,19 @@ class _SidebarState extends State<Sidebar> {
               new UserAccountsDrawerHeader(
                   //accountName: Text("${user?.displayName}"),
                   accountEmail: Text("${user?.email}")),
+              new ListTile(
+                title: new Text("Dashboard"),
+                leading: new Icon(
+                    Icons.dashboard,
+                    color: Colors.blueGrey,
+                    size: 35.0
+                ),
+                trailing: Icon (Icons.keyboard_arrow_right),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => Home()));
+                },
+              ),
               new ListTile(
                 title: new Text("Buy ticket"),
                 leading: new Icon(

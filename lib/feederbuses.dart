@@ -15,6 +15,7 @@ class _FeederBusState extends State<FeederBus> {
         return new Future(() => false);
       },
       child: Scaffold(
+        resizeToAvoidBottomPadding: false,
         appBar: new AppBar(
             title: new Text("Feeder bus"),
             centerTitle: true
@@ -106,14 +107,50 @@ class _BusDetailsState extends State<BusDetails> {
           centerTitle: true
       ),
       body: Container(
-        child: Card(
-          child: ListTile(
-            title: Text (
-                "Route number: " + "\n" + "${widget.bus.data["route_no"]}" + "\n\n" +
-                    "Station: " + "\n" + "${widget.bus.data["station"]}" + "\n"),
-            subtitle: Text("Bus route: " + "\n" + "${widget.bus.data["bus_route"]}"),
-            contentPadding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
-          ),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        child: ListView(
+          children: <Widget>[
+            Text("Route number: "+ "${widget.bus.data["route_no"]}",
+                style: TextStyle(
+                fontSize: 20,
+                fontFamily: 'Open Sans',
+                fontWeight: FontWeight.bold
+              ),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 20),
+            Text("${widget.bus.data["station"] + " Station"}",
+              style: TextStyle(
+                  fontSize: 20,
+                  fontFamily: 'Open Sans',
+                  fontWeight: FontWeight.bold
+              ),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 20),
+            Text("Bus route: ",
+              style: TextStyle(
+                  fontSize: 20,
+                  fontFamily: 'Open Sans',
+                  fontWeight: FontWeight.bold
+              ),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 10),
+            Text("${widget.bus.data["bus_route"].join("\n")}",
+              style: TextStyle(
+                fontSize: 15,
+                letterSpacing: 0.5,
+              ),
+              textAlign: TextAlign.center,
+            ),
+
+//            Text (
+//                "Route number: " + "\n" + "${widget.bus.data["route_no"]}" + "\n\n" +
+//                "Station: " + "\n" + "${widget.bus.data["station"]}" + "\n"),
+//            Text("Bus route: " + "\n" + "${widget.bus.data["bus_route"].join("\n")}")
+          ],
+
         ),
       ),
     );
@@ -121,20 +158,3 @@ class _BusDetailsState extends State<BusDetails> {
 }
 
 
-//class FeederBus extends StatelessWidget {
-//  @override
-//  Widget build(BuildContext context) {
-//    return WillPopScope(
-//      onWillPop: () {
-//        return new Future(() => false);
-//      },
-//      child: Scaffold(
-//        appBar: new AppBar(
-//            title: new Text("Feeder bus"),
-//            centerTitle: true
-//        ),
-//        drawer: new Sidebar(), //calling the sidebar
-//      ),
-//    );
-//  }
-//}

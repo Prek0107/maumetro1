@@ -11,6 +11,15 @@ class LoginPage extends StatefulWidget {
 class LoginPageState extends State<LoginPage> {
   String _email, _password;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  //Password visibility
+  bool _isHidden = true;
+  void _toggleVisibility(){
+    setState(() {
+      _isHidden = !_isHidden;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,8 +35,23 @@ class LoginPageState extends State<LoginPage> {
             TextFormField(
               validator: (input) {
                 if(input.isEmpty){
-                  return 'Please enter your email';
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text("Please enter your email"),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text('Ok'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      });
                 }
+                return null;
               },
               onSaved: (input) => _email = input,
               decoration: InputDecoration(
@@ -35,23 +59,45 @@ class LoginPageState extends State<LoginPage> {
                 hintText: "Email",
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(32.0)),
+                prefixIcon: Icon(Icons.email)
               ),
             ),
             SizedBox(height: 30),
             TextFormField(
               validator: (input) {
                 if(input.length < 10){
-                  return 'Please enter a password which is atleast 10 characters';
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text("Please enter a password which is atleast 10 characters"),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text('Ok'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      });
                 }
+                return null;
               },
               onSaved: (input) => _password = input,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                 hintText: "Password",
                 border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(32.0)),
+                    borderRadius: BorderRadius.circular(32.0)
+                ),
+                prefixIcon: Icon(Icons.lock),
+                suffixIcon: IconButton(
+                  onPressed: _toggleVisibility,
+                  icon: _isHidden ? Icon(Icons.visibility_off) : Icon(Icons.visibility),
+                ),
               ),
-              obscureText: true, //hide password when typed
+              obscureText: _isHidden ? true : false, //hide or show password when typed
             ),
             SizedBox(height: 30),
             RaisedButton(

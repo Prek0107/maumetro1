@@ -15,9 +15,15 @@ class _SignUpPageState extends State<SignUpPage> {
   final db = Firestore.instance;
   String _email, _password, _fullname, _id;
 
+  //Password visibility
+  bool _isHidden = true;
+  void _toggleVisibility(){
+    setState(() {
+      _isHidden = !_isHidden;
+    });
+  }
+
   //final userId = FirebaseAuth.instance.currentUser();
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +40,23 @@ class _SignUpPageState extends State<SignUpPage> {
             TextFormField(
               validator: (input) {
                 if(input.isEmpty){
-                  return 'Please enter your full name';
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('Please enter your full name'),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text('Ok'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      });
                 }
+                return null;
               },
               onSaved: (input) => _fullname = input,
               decoration: InputDecoration(
@@ -43,14 +64,30 @@ class _SignUpPageState extends State<SignUpPage> {
                 hintText: "Fullname",
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(32.0)),
+                  prefixIcon: Icon(Icons.person)
               ),
             ),
             SizedBox(height: 30), //space between the textfields
             TextFormField(
               validator: (input) {
                 if(input.isEmpty){
-                  return 'Please enter your email';
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('Please enter your email'),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text('Ok'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      });
                 }
+                return null;
               },
               onSaved: (input) => _email = input,
               decoration: InputDecoration(
@@ -58,14 +95,31 @@ class _SignUpPageState extends State<SignUpPage> {
                   hintText: "Email",
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(32.0)),
+                  prefixIcon: Icon(Icons.email)
               ),
             ),
             SizedBox(height: 30), //space between the textfields
             TextFormField(
               validator: (input) {
                 if(input.length < 10){
-                  return 'Please enter a password which is atleast 10 characters';
+
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('Please enter a password which is atleast 10 characters'),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text('Ok'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      });
                 }
+                return null;
               },
               onSaved: (input) => _password = input,
               decoration: InputDecoration(
@@ -73,8 +127,13 @@ class _SignUpPageState extends State<SignUpPage> {
                 hintText: "Password",
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(32.0)),
+                prefixIcon: Icon(Icons.lock),
+                suffixIcon: IconButton(
+                  onPressed: _toggleVisibility,
+                  icon: _isHidden ? Icon(Icons.visibility_off) : Icon(Icons.visibility),
+                ),
               ),
-              obscureText: true, //hide password when typed
+              obscureText: _isHidden ? true : false, //hide password when typed
             ),
             SizedBox(height: 30), //space between the textfields
             RaisedButton(
@@ -122,7 +181,8 @@ class _SignUpPageState extends State<SignUpPage> {
           .add({
         'fullname': '$_fullname',
         'email': '$_email',
-        'UID': '$uid'
+        'UID': '$uid',
+
       });
       setState(() => _id= ref.documentID);
       print(ref.documentID);
