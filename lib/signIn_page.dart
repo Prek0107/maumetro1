@@ -20,6 +20,8 @@ class LoginPageState extends State<LoginPage> {
     });
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,25 +33,13 @@ class LoginPageState extends State<LoginPage> {
         key: _formKey,
         child: Column(
           children: <Widget>[
+            SizedBox(height: 20.0),
+            Image.asset('assets/logo2.png', height: 150, width: 150,),
             SizedBox(height: 30),
             TextFormField(
               validator: (input) {
                 if(input.isEmpty){
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text("Please enter your email"),
-                          actions: <Widget>[
-                            FlatButton(
-                              child: Text('Ok'),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        );
-                      });
+                  return "Please your email address";
                 }
                 return null;
               },
@@ -57,37 +47,33 @@ class LoginPageState extends State<LoginPage> {
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                 hintText: "Email",
+                errorStyle: TextStyle(
+                  fontSize: 15.0
+                ),
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(32.0)),
                 prefixIcon: Icon(Icons.email)
               ),
+              keyboardType: TextInputType.emailAddress,
             ),
             SizedBox(height: 30),
             TextFormField(
               validator: (input) {
                 if(input.length < 10){
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text("Please enter a password which is atleast 10 characters"),
-                          actions: <Widget>[
-                            FlatButton(
-                              child: Text('Ok'),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        );
-                      });
+                  return "Please enter password of atleast 10 characters ";
+              } else {
+                  if(input.isEmpty){
+                    return "Please enter a password";
+                  } return null;
                 }
-                return null;
               },
               onSaved: (input) => _password = input,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                 hintText: "Password",
+                errorStyle: TextStyle(
+                    fontSize: 15.0
+                ),
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(32.0)
                 ),
@@ -100,18 +86,19 @@ class LoginPageState extends State<LoginPage> {
               obscureText: _isHidden ? true : false, //hide or show password when typed
             ),
             SizedBox(height: 30),
-            RaisedButton(
+            OutlineButton(
               onPressed: signIn,
               child: Text('Login', style: TextStyle(
                   fontSize: 20.0)),
-              padding: EdgeInsets.symmetric(vertical: 11.0, horizontal: 59.0), //size of button
+              padding: EdgeInsets.symmetric(vertical: 9.0, horizontal: 59.0), //size of button
               color: Colors.blue,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
                   Radius.circular(20),
                 ),
               ),
-              elevation: 24.0, //shadow of button
+              borderSide: BorderSide(color: Colors.red, width: 2),
+              //elevation: 24.0, //shadow of button
             ),
           ],
         ),
