@@ -7,13 +7,25 @@ class BuyTickets extends StatefulWidget {
   _BuyTicketsState createState() => _BuyTicketsState();
 }
 
-var selectedTicketType, selectedTicketOrigin, selectedTicketDestination;
+var selectedTicketType, selectedTicketOrigin, selectedTicketDestination, document;
+String price;
 
 Widget _circularProgressIndicator() {
   return CircularProgressIndicator(); //loading
 }
 
 class _BuyTicketsState extends State<BuyTickets> {
+
+  @override
+  void initState() {
+
+
+
+    calculatePrice();
+    totalPrice();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -189,9 +201,68 @@ class _BuyTicketsState extends State<BuyTickets> {
                 }
               },
             ),
+
+
+          Text(totalPrice()),
+
+
+// ticketTypeValue // ticketOriginValue   //ticketDestinationValue
+//          StreamBuilder<QuerySnapshot>(
+//            stream: Firestore.instance.collection('ticket_price').snapshots(),
+//            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+//              if (!snapshot.hasData) return new Text('Loading...');
+//              return new ListView(
+//                children: snapshot.data.documents.map((DocumentSnapshot document) {
+//                  return new ListTile(
+//                    title: new Text(document["ticketTypeValue"]),
+//                    //subtitle: new Text(document['author']),
+//                  );
+//                }).toList(),
+//              );
+//            },
+//          ),
+
+
+
+
+
+            OutlineButton(
+              onPressed: (){
+
+              },
+              child: Text('Buy ticket', style: TextStyle(
+                  fontSize: 20.0)),
+              padding: EdgeInsets.symmetric(vertical: 9.0, horizontal: 59.0), //size of button
+              color: Colors.blue,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(20),
+                ),
+              ),
+              borderSide: BorderSide(color: Colors.black12, width: 3),
+            ),
           ],
         )
       ),
     );
+  }
+  Future<void> calculatePrice() async {
+    document = await Firestore.instance.collection('ticket_price').document(selectedTicketType).collection('$selectedTicketOrigin - $selectedTicketDestination').document('$selectedTicketOrigin - $selectedTicketDestination').get();
+    if (document.data != null) {
+      setState(() {
+        price = document.data['price'];
+      });
+
+    }
+  }
+
+  String totalPrice() {
+    calculatePrice();
+    if (price == null) {
+      return "0";
+    }
+    else {
+      return price;
+    }
   }
 }
