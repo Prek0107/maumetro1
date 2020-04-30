@@ -1,3 +1,4 @@
+//This page is about the information displayed about the MECards which are used to travel by metro
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'sidebar.dart';
@@ -194,13 +195,6 @@ class _CardDetailsState extends State<CardDetails> {
                     letterSpacing: 0.5
                 ),
               ),
-//              Text (
-//              "MECard type: " + "${widget.card.data["type"]}" + "\n\n" +
-//              "Description: " + "${widget.card.data["description"]}" + "\n\n" +
-//              "Availability: " + "${widget.card.data["availability"]}" + "\n\n" +
-//              "Price: " + "${widget.card.data["price"]}" + "\n\n" +
-//              "Travel document needed: " + "${widget.card.data["travel_documents"]}" + "\n\n"
-//            )
             ],
         ),
       ),
@@ -210,21 +204,3 @@ class _CardDetailsState extends State<CardDetails> {
 
 
 
-//class MeCard extends StatelessWidget {
-//  @override
-//  Widget build(BuildContext context) {
-//    return WillPopScope(
-//      onWillPop: () {
-//        return new Future(() => false);
-//      },
-//      child: Scaffold(
-//        appBar: new AppBar(
-//            title: new Text("MECard"),
-//            centerTitle: true
-//        ),
-//        //calling the sidebar
-//        drawer: new Sidebar(),
-//      ),
-//    );
-//  }
-//}
