@@ -7,8 +7,8 @@ class BuyTickets extends StatefulWidget {
   _BuyTicketsState createState() => _BuyTicketsState();
 }
 
-var selectedTicketType, selectedTicketOrigin, selectedTicketDestination, document;
-String price;
+var selectedTicketType, selectedTicketOrigin, selectedTicketDestination, document, time;
+String price, distance;
 
 Widget _circularProgressIndicator() {
   return CircularProgressIndicator(); //loading
@@ -18,11 +18,12 @@ class _BuyTicketsState extends State<BuyTickets> {
 
   @override
   void initState() {
-
-
-
     calculatePrice();
     totalPrice();
+    calculateDistance();
+    totalDistance();
+    calculateTime();
+    totalTime();
     super.initState();
   }
 
@@ -74,7 +75,9 @@ class _BuyTicketsState extends State<BuyTickets> {
                           onChanged: (ticketTypeValue){
                             final snackBar=SnackBar(
                               content:
-                              Text('Selected ticket type is $ticketTypeValue', style: TextStyle(color: Colors.blueGrey),),
+                              Text('Selected ticket type is $ticketTypeValue',
+                                style: TextStyle(color: Colors.blueGrey),),
+                                duration: Duration(milliseconds: 500)
                             );
                             Scaffold.of(context).showSnackBar(snackBar);
                             setState(() {
@@ -127,7 +130,9 @@ class _BuyTicketsState extends State<BuyTickets> {
                         onChanged: (ticketOriginValue){
                           final snackBar=SnackBar(
                             content:
-                            Text('Selected ticket origin is $ticketOriginValue', style: TextStyle(color: Colors.blueGrey),),
+                            Text('Selected ticket origin is $ticketOriginValue',
+                              style: TextStyle(color: Colors.blueGrey),),
+                              duration: Duration(milliseconds: 500)
                           );
                           Scaffold.of(context).showSnackBar(snackBar);
                           setState(() {
@@ -180,7 +185,9 @@ class _BuyTicketsState extends State<BuyTickets> {
                         onChanged: (ticketDestinationValue){
                           final snackBar=SnackBar(
                             content:
-                            Text('Selected ticket destination is $ticketDestinationValue', style: TextStyle(color: Colors.blueGrey),),
+                            Text('Selected ticket destination is $ticketDestinationValue',
+                              style: TextStyle(color: Colors.blueGrey),),
+                              duration: Duration(milliseconds: 500)
                           );
                           Scaffold.of(context).showSnackBar(snackBar);
                           setState(() {
@@ -203,27 +210,9 @@ class _BuyTicketsState extends State<BuyTickets> {
             ),
 
 
-          Text(totalPrice()),
-
-
-// ticketTypeValue // ticketOriginValue   //ticketDestinationValue
-//          StreamBuilder<QuerySnapshot>(
-//            stream: Firestore.instance.collection('ticket_price').snapshots(),
-//            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-//              if (!snapshot.hasData) return new Text('Loading...');
-//              return new ListView(
-//                children: snapshot.data.documents.map((DocumentSnapshot document) {
-//                  return new ListTile(
-//                    title: new Text(document["ticketTypeValue"]),
-//                    //subtitle: new Text(document['author']),
-//                  );
-//                }).toList(),
-//              );
-//            },
-//          ),
-
-
-
+          Text("Price = Rs " + totalPrice()),
+          Text("Distance = " + totalDistance() + " km"),
+          Text("Estimated time = " + totalTime() + " minutes"),
 
 
             OutlineButton(
@@ -252,9 +241,42 @@ class _BuyTicketsState extends State<BuyTickets> {
       setState(() {
         price = document.data['price'];
       });
-
     }
   }
+
+  Future<void> calculateDistance() async {
+    document = await Firestore.instance.collection('ticket_price').document(selectedTicketType).collection('$selectedTicketOrigin - $selectedTicketDestination').document('$selectedTicketOrigin - $selectedTicketDestination').get();
+    if (document.data != null) {
+      setState(() {
+        distance = document.data['distance'];
+      });
+    }
+  }
+
+//  Future<void> calculateTime() async {
+//    document = await Firestore.instance.collection('ticket_price').document(selectedTicketType).collection('$selectedTicketOrigin - $selectedTicketDestination').document('$selectedTicketOrigin - $selectedTicketDestination').get();
+//    if (document.data != null) {
+//      setState(() {
+//        time = document.data['time'];
+//      });
+//    }
+//  }
+
+  //retrieves data distance from database and calculates time according to distance (has been explained in the report)
+  //26 km in covered in 41 minutes - official data from metroExpress
+  //1 km takes approximately 1.5 minutes (41/26)
+  //thus, time is calculated by multiplying by 1.5 (double)
+  //converts the calculated value to 2 significant figures to be displayed
+  Future<void> calculateTime() async {
+    document = await Firestore.instance.collection('ticket_price').document(selectedTicketType).collection('$selectedTicketOrigin - $selectedTicketDestination').document('$selectedTicketOrigin - $selectedTicketDestination').get();
+    if (document.data != null) {
+      setState(() {
+        distance = document.data['distance'];
+        time= (double.parse(distance) * 1.5).toStringAsFixed(0);
+      });
+    }
+  }
+
 
   String totalPrice() {
     calculatePrice();
@@ -265,4 +287,25 @@ class _BuyTicketsState extends State<BuyTickets> {
       return price;
     }
   }
+
+  String totalDistance() {
+    calculateDistance();
+    if (distance == null) {
+      return "0";
+    }
+    else {
+      return distance;
+    }
+  }
+
+  String totalTime() {
+    calculateTime();
+    if (time == null) {
+      return "0";
+    }
+    else {
+      return time;
+    }
+  }
+
 }
