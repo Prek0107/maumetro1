@@ -1,3 +1,4 @@
+//This is the page where the information about the feeder bus is retrieved and displayed
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'sidebar.dart';
@@ -21,7 +22,7 @@ class _FeederBusState extends State<FeederBus> {
             centerTitle: true
         ),
         drawer: new Sidebar(), //calling the sidebar
-        body: BusList(),
+        body: BusList()
       ),
     );
   }
@@ -92,7 +93,6 @@ class BusDetails extends StatefulWidget {
   final DocumentSnapshot bus;
   BusDetails({this.bus});
 
-
   @override
   _BusDetailsState createState() => _BusDetailsState();
 }
@@ -144,13 +144,7 @@ class _BusDetailsState extends State<BusDetails> {
               ),
               textAlign: TextAlign.center,
             ),
-
-//            Text (
-//                "Route number: " + "\n" + "${widget.bus.data["route_no"]}" + "\n\n" +
-//                "Station: " + "\n" + "${widget.bus.data["station"]}" + "\n"),
-//            Text("Bus route: " + "\n" + "${widget.bus.data["bus_route"].join("\n")}")
           ],
-
         ),
       ),
     );
